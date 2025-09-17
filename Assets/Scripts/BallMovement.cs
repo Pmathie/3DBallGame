@@ -48,6 +48,8 @@ public class BallMovement : MonoBehaviour
             isGrounded = true;
         }
         
+        
+        
     }
     private void OnCollisionExit(Collision collision)
     {
