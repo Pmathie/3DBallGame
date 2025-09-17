@@ -7,7 +7,7 @@ public class BallMovement : MonoBehaviour
     public float moveSpeed;
     public float jumpSpeed;
     public bool isGrounded;
-
+    
     public Transform cameraTransform;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,7 +29,7 @@ public class BallMovement : MonoBehaviour
 
         moveDirection = (forward * Input.GetAxis("Vertical") + right * Input.GetAxis("Horizontal")).normalized;
         
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector3.up*jumpSpeed, ForceMode.Impulse);
         }
@@ -39,7 +39,22 @@ public class BallMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(moveDirection * moveSpeed);
+    }
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == 3)
+        {
+            isGrounded = true;
+        }
+        
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 3)
+        {
+            isGrounded = false;
+        }
+            
     }
 }
