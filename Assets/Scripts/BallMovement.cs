@@ -5,20 +5,45 @@ public class BallMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 moveDirection;
     public float moveSpeed;
+    public float jumpSpeed;
+    public bool isGrounded;
+
     public Transform cameraTransform;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        cameraTransform = Camera.main.transform;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-        rb.AddForce(moveDirection*moveSpeed);
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = 0f;
+        right.y = 0f;
 
+        moveDirection = (forward * Input.GetAxis("Vertical") + right * Input.GetAxis("Horizontal")).normalized;
         
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up*jumpSpeed, ForceMode.Impulse);
+        }
+   
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(moveDirection * moveSpeed);
+
+
+    }
+    void Jump()
+    {
+
     }
 }
