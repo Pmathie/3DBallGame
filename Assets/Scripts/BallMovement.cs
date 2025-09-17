@@ -42,8 +42,4 @@ public class BallMovement : MonoBehaviour
 
 
     }
-    void Jump()
-    {
-
-    }
 }
