@@ -19,6 +19,7 @@ public class Coin : MonoBehaviour
         {
             other.GetComponent<PlayerCoinCollector>().AddCoin();
             Destroy(gameObject);
+            //Tilføj en måde at afspille lyd på her
         }
     }
 }

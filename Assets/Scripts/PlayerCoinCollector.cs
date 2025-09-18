@@ -7,6 +7,8 @@ public class PlayerCoinCollector : MonoBehaviour
     public void AddCoin()
     {
             coinCount++;
+            UIManager.Instance.UpdateCoinCount(coinCount);
+   
     }
 
 }
