@@ -1,25 +1,29 @@
+using System.Collections;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public AudioSource coinSound;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerCoinCollector>())
         {
             other.GetComponent<PlayerCoinCollector>().AddCoin();
-            Destroy(gameObject);
-            //Tilføj en måde at afspille lyd på her
+            coinSound.Play();
+
+            GetComponent<Renderer>().enabled = false; //Gør mønten usynlig
+            GetComponent<Collider>().enabled = false; //Gør at vi ikke kan kollidere med mønten
+
+            StartCoroutine(DestroyCoin());
+           
+        }
+    }
+    IEnumerator DestroyCoin()
+    {
+        yield return new WaitForSeconds(coinSound.clip.length); //Venter på at lyden er afspillet
+        {
+            Destroy(gameObject); //Ødelægger mønten
         }
     }
 }
